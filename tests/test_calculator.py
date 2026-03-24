@@ -29,4 +29,3 @@ def test_divide_by_zero():
 @pytest.mark.external
 def test_external_api():
     pass  # placeholder for live API call
-
