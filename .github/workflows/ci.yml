@@ -1,3 +1,4 @@
+# Human-readable name shown in the Actions tab
 name: CI
 
 on:
