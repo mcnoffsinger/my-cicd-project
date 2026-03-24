@@ -1,4 +1,5 @@
 import pytest
+import requests
 from src.calculator import add, subtract, multiply, divide
 
 
@@ -19,13 +20,27 @@ def test_divide():
     assert divide(10, 2) == 5.0
 
 
+# Replaces writing 4 identical test functions
+@pytest.mark.parametrize("a, b, expected", [
+    (2,   3,   5),    # positive
+    (0,   0,   0),    # zeros
+    (-1,  1,   0),    # negative
+    (100, -50, 50),   # large values
+])
+def test_add_cases(a, b, expected):
+    assert add(a, b) == expected
+
+
 # Test that an exception IS raised
 def test_divide_by_zero():
     with pytest.raises(ValueError):
         divide(5, 0)
 
 
-# Marked — skipped in CI, runs nightly on schedule
+# Apply multiple markers to one test
+
 @pytest.mark.external
-def test_external_api():
-    pass  # placeholder for live API call
+@pytest.mark.slow
+def test_weather_api():
+    resp = requests.get("https://openweathermap.org/api")
+    assert resp.status_code == 200
